@@ -1,0 +1,16 @@
+import pytest
+from playwright.sync_api import Page
+
+def test_add_item_to_cart(page: Page):
+    # Step 1: Login first
+    page.goto("https://www.saucedemo.com/")
+    page.fill("#user-name", "standard_user")
+    page.fill("#password", "secret_sauce")
+    page.click("#login-button")
+    
+    # Step 2: Add first item to cart
+    page.click("#add-to-cart-sauce-labs-backpack")
+    
+    # Step 3: Check cart badge shows "1"
+    badge = page.text_content(".shopping_cart_badge")
+    assert badge == "1", f"Expected cart count 1, got {badge}"p
